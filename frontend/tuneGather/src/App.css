@@ -56,12 +56,16 @@
 .fc .fc-button-group > .fc-button{
   border-top-right-radius: 23px;
   border-bottom-right-radius: 23px;
+  border: none !important;
+
 }
 
 .fc-today-button {
   background-color: #fa0559;
   color: #F5F3F4;
   border-radius: 23px !important;
+  border: none !important;
+
 }
 
 .fc {
@@ -71,6 +75,14 @@
 .fc .fc-media-screen .fc-direction-ltr .fc-theme-standard {
   max-width: 100%;
   overflow-x: auto;
+}
+
+.fc button.fc-addEventButton-button {
+  color: white;
+  border-radius: 23px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
 }
 
 

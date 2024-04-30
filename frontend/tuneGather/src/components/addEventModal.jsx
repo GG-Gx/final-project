@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Flex, Text, Heading } from '@chakra-ui/react';
+import { Input, Button, FormControl, FormLabel, Box, Flex} from "@chakra-ui/react";
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import { useState } from 'react';
@@ -42,22 +42,34 @@ export default function AddEventModal({ isOpen, onClose, onEventadded }) {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={onSubmit}>
-        <input value={title} placeholder="Title" onChange={e => setTitle(e.target.value)} />
+      <Box>
+        <Flex
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          w="100%"
+          h="100%"
+          p={4}
+          color="black"
+        >
+          <form onSubmit={onSubmit}>
+            <FormControl mb={4}>
+              <FormLabel>Title</FormLabel>
+              <Input value={title} placeholder="Title" onChange={e => setTitle(e.target.value)} />
+            </FormControl>
+            <FormControl mb={4}>
+              <FormLabel>Start</FormLabel>
+              <Datetime value={start} onChange={date => setStart(date)} />
+            </FormControl>
+            <FormControl mb={4}>
+              <FormLabel>End</FormLabel>
+              <Datetime value={end} onChange={date => setEnd(date)} />
+            </FormControl>
 
-        <div>
-          <label>Start</label>
-          <Datetime value={start} onChange={date => setStart(date)} />
-        </div>
-        <div>
-          <label>End</label>
-          <Datetime value={end} onChange={date => setEnd(date)} />
-        </div>
-
-        <Button type="submit">Add Availability</Button>
-
-      </form>
-
+            <Button type="submit" mt={4} colorScheme="blue">Add Availability</Button>
+          </form>
+        </Flex>
+      </Box>
     </Modal>
   );
 }

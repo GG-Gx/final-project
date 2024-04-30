@@ -111,29 +111,9 @@ function Calendar() {
       borderRadius='23px'
       bg='#f5f5f5'
       p={5}
+      
     >
-      <Heading
-        as='h1'
-        size='xl'
-        textAlign='center'
-        color='black'
-        mb='auto'
-        mt='auto'
-      >Calendar</Heading>
-
-      <Button
-        colorScheme='blue'
-        display='flex'
-        width='25%'
-        borderRadius='23px'
-        mt='auto'
-        mb='auto'
-        ml='auto'
-        mr='left'
-        marginRight={3}
-        onClick={() => setModalOpen(true)}
-      >Add Availability</Button>
-
+ 
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
@@ -142,8 +122,23 @@ function Calendar() {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          right: 'addEventButton'
         }}
+        customButtons={{
+          addEventButton: {
+            text: 'add availability',
+            click: () => setModalOpen(true),
+            style: {
+              backgroundColor: '#3182CE',
+              color: 'white',
+              borderRadius: '23px',
+              padding: '10px',
+              border: 'none',
+              cursor: 'pointer'
+            }
+          }
+        }}
+        titleFormat={{ year: 'numeric', month: 'short'}}
         aspectRatio={1}
         height={'90%'}
         handleWindowResize={true}
@@ -160,6 +155,9 @@ function Calendar() {
         datesSet={(date) => handleDatesSet(date)}
         events={events}
       />
+
+
+
       <AddEventModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onEventadded={onEventadded} />
     </Box>
   )
