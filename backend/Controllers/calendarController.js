@@ -50,4 +50,22 @@ router.get('/get-availability', async (req, res) => {
   }
 });
 
+router.delete('/delete-availability/:id', async (req, res) => {
+
+  try {
+    const eventId = req.params.id;
+
+    // Perform deletion based on the eventId
+
+    res.sendStatus(200); // Respond with success
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+
 module.exports = router;

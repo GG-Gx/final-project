@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import Modal from 'react-modal';
 import AddEventModal from './addEventModal';
+import DeleteEventModal from './deleteEventModal';
 import axios from 'axios';
 import moment from 'moment';
 import FullCalendar from '@fullcalendar/react'
@@ -10,7 +11,8 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 function Calendar() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const calendarRef = useRef(null);
 
@@ -36,7 +38,7 @@ function Calendar() {
       const response = await axios.post('http://localhost:5000/calendar/create-availability', {
         start: event.start,
         end: event.end,
-        title: event.title
+        title: event.title,
       });
   
       console.log('Event added successfully:', response.data);
@@ -88,7 +90,7 @@ function Calendar() {
       const response = await axios.post('http://localhost:5000/calendar/create-availability', {
         start: event.start,
         end: event.end,
-        title: event.title
+        title: event.title,
       });
       
       console.log('Event added successfully:', response.data);
@@ -100,7 +102,8 @@ function Calendar() {
     }
   }
 
-  
+
+
 
   return (
     <Box
@@ -126,8 +129,8 @@ function Calendar() {
         }}
         customButtons={{
           addEventButton: {
-            text: 'add availability',
-            click: () => setModalOpen(true),
+            text: 'add',
+            click: () => setAddModalOpen(true),
             style: {
               backgroundColor: '#3182CE',
               color: 'white',
@@ -154,11 +157,46 @@ function Calendar() {
         eventAdd={(event) => handleEventAdd(event)}
         datesSet={(date) => handleDatesSet(date)}
         events={events}
+        eventClick={(eventClickInfo) => {
+          console.log('Event clicked:', eventClickInfo.event);
+
+          const eventId = eventClickInfo.event._def.extendedProps._id;
+          console.log('Event ID:', eventId);
+        
+          const deleteEvent = () => {
+            try {
+              const calendarApi = calendarRef.current.getApi();
+              const eventToRemove = calendarApi.getEventById(eventId);
+        
+              if (eventToRemove) {
+                eventToRemove.remove();
+                console.log('Event deleted successfully');
+        
+                // axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`)
+                //   .then(response => {
+                //     console.log('Event data deleted successfully:', response.data);
+                //   })
+                //   .catch(error => {
+                //     console.error('Error deleting event data:', error);
+                //   });
+              } else {
+                console.error('Event not found in the calendar');
+              }
+            } catch (error) {
+              console.error('Error deleting event:', error);
+            }
+          };
+        
+          deleteEvent();
+      
+        }}
+
       />
 
 
 
-      <AddEventModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onEventadded={onEventadded} />
+      <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={onEventadded} />
+      <DeleteEventModal isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}  />
     </Box>
   )
 }
@@ -167,7 +205,7 @@ function renderEventContent(eventInfo) {
   return (
     <>
       <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
+      <i> {eventInfo.event.title}</i>
     </>
   )
 }
