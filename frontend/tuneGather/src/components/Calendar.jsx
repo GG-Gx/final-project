@@ -11,6 +11,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import { Link } from 'react-router-dom';
 
 function Calendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -207,7 +208,7 @@ function Calendar() {
         setDeleteModalOpen(false);
       }} />
 
-
+      <Link to={'/shared-calendar'}>
       <Button
         type='button'
         onClick={() => alert('share calendar')}
@@ -222,6 +223,7 @@ function Calendar() {
           cursor: 'pointer'
         }}>
           <Icon as={LinkIcon} color='white' /></Button>
+      </Link>
           </Box>
   )
 }
