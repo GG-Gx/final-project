@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Box, Button, Heading, Icon } from '@chakra-ui/react';
-import { ExternalLinkIcon, AddIcon } from '@chakra-ui/icons'
+import { ExternalLinkIcon, AddIcon,LinkIcon } from '@chakra-ui/icons'
 
 import Modal from 'react-modal';
 import AddEventModal from './addEventModal';
@@ -115,8 +115,8 @@ function Calendar() {
   return (
     <Box
       style={{ position: 'relative', zIndex: 0 }}
-      height={['80%', '70%']}
-      width={['90%', '60%']}
+      height={['90%', '80%']}
+      width={['90%', '70%']}
       shadow='lg'
       borderRadius='23px'
       bg='#f5f5f5'
@@ -207,10 +207,10 @@ function Calendar() {
         setDeleteModalOpen(false);
       }} />
 
-      
+
       <Button
         type='button'
-        onClick={() => setAddModalOpen(true)}
+        onClick={() => alert('share calendar')}
         style={{
           position: 'absolute',
           bottom: '20px',
@@ -221,7 +221,7 @@ function Calendar() {
           border: 'none',
           cursor: 'pointer'
         }}>
-          <Icon as={ExternalLinkIcon} color='white' /></Button>
+          <Icon as={LinkIcon} color='white' /></Button>
           </Box>
   )
 }
