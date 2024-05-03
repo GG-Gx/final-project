@@ -12,45 +12,46 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-function Calendar() {
+function SharedCalendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const calendarRef = useRef(null);
 
- 
-
-  const handleEventAdd = async (event) => {
+  const onEventadded = async (event) => {
     try {
       // Ensure the event object has the required fields
       if (!event.start || !event.end || !event.title) {
         console.error('Missing required fields:', event);
         return false;
       }
-  
+
       // If all required fields are present, add the event to the calendar
       const calendarApi = calendarRef.current.getApi();
-      calendarApi.addEvent({ 
+      calendarApi.addEvent({
         start: event.start,
         end: event.end,
         title: event.title,
       });
-  
+
       // Send the event data to the server to create
       const response = await axios.post('http://localhost:5000/calendar/create-availability', {
         start: event.start,
         end: event.end,
         title: event.title,
       });
-  
+
       console.log('Event added successfully:', response.data);
       return false; // Return synchronously
     } catch (error) {
       console.error('Error adding event:', error);
-      return true;
+      return false;
     }
   };
+
+
+
 
   const handleDatesSet = async (date) => {
     try {
@@ -71,39 +72,7 @@ function Calendar() {
   };
 
 
-  const onEventadded = async (event) => {
-    
-    try {
-      // Ensure the event object has the required fields
-      if (!event.start || !event.end || !event.title) {
-        console.error('Missing required fields:', event);
-        return false;
-      }
-      
-      // If all required fields are present, add the event to the calendar
-      const calendarApi = calendarRef.current.getApi();
-      calendarApi.addEvent({
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
 
-      // Send the event data to the server to create
-
-      const response = await axios.post('http://localhost:5000/calendar/create-availability', {
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
-      
-      console.log('Event added successfully:', response.data);
-      return false; // Return synchronously
-
-    } catch (error) {
-      console.error('Error adding event:', error);
-      return true;
-    }
-  }
 
 
 
@@ -132,22 +101,9 @@ function Calendar() {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'addEventButton'
-        }}
-        customButtons={{
-          addEventButton: {
-            text: 'add' ,
-            click: () => setAddModalOpen(true),
-            style: {
-              backgroundColor: '#3182CE',
-              color: 'white',
-              borderRadius: '23px',
-              padding: '10px',
-              border: 'none',
-              cursor: 'pointer'
-            }
-          }
-        }}
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+ }}
+      
         titleFormat={{ year: 'numeric', month: 'short'}}
         aspectRatio={1}
         height={'90%'}
@@ -164,24 +120,6 @@ function Calendar() {
         eventAdd={(event) => handleEventAdd(event)}
         datesSet={(date) => handleDatesSet(date)}
         events={events}
-      //   eventClick={(eventClickInfo) => {
-      //     console.log('Event clicked:', eventClickInfo.event);
-
-      //     const eventId = eventClickInfo.event._def.extendedProps._id;
-      //     console.log('Event ID:', eventId);
-      //     console.log(eventClickInfo.event.Id);
-      //     eventClickInfo.event.remove();
-          
-      //           axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`)
-      //             .then(response => {
-      //               console.log('Event data deleted successfully:', response.data);
-      //             })
-      //             .catch(error => {
-      //               console.error('Error deleting event data:', error);
-      //             });
-      //             return false;
-      //   }
-      // }
       eventClick={(eventClickInfo) => {
         console.log('Event clicked:', eventClickInfo.event);
         setEventClickInfo(eventClickInfo);
@@ -206,25 +144,13 @@ function Calendar() {
           });
         setDeleteModalOpen(false);
       }} />
+    </Box>
 
-      
-      <Button
-        type='button'
-        onClick={() => setAddModalOpen(true)}
-        style={{
-          position: 'absolute',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: '#3182CE',
-          color: 'white',
-          borderRadius: '23px',
-          border: 'none',
-          cursor: 'pointer'
-        }}>
-          <Icon as={ExternalLinkIcon} color='white' /></Button>
-          </Box>
-  )
+  );
 }
+
+  
+
 
 function renderEventContent(eventInfo) {
   return (
@@ -237,4 +163,4 @@ function renderEventContent(eventInfo) {
 
 Modal.setAppElement('#root');
 
-export default Calendar;
+export default SharedCalendar;

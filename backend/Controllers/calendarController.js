@@ -51,15 +51,22 @@ router.get('/get-availability', async (req, res) => {
 });
 
 router.delete('/delete-availability/:id', async (req, res) => {
-
   try {
     const eventId = req.params.id;
 
-    // Perform deletion based on the eventId
+    // Use Mongoose to find and delete the event
+    const deletedEvent = await Event.findByIdAndDelete(eventId);
 
-    res.sendStatus(200); // Respond with success
+    if (!deletedEvent) {
+      // If event with the given ID is not found, return 404 Not Found
+      return res.status(404).send('Event not found');
+    }
+
+    // Respond with success
+    res.sendStatus(200);
   } catch (error) {
     console.error('Error deleting event:', error);
+    // If there's an error, return 500 Internal Server Error
     res.status(500).send('Internal Server Error');
   }
 });
