@@ -165,6 +165,14 @@ function Calendar() {
         eventAdd={(event) => handleEventAdd(event)}
         datesSet={(date) => handleDatesSet(date)}
         events={events}
+        eventMouseEnter={(event) => {
+          event.el.style.backgroundColor = '#63B3ED';
+          event.el.style.cursor = 'pointer';
+        }}
+        eventMouseLeave={(event) => {
+          event.el.style.backgroundColor = '#3182CE';
+        }
+        }
       //   eventClick={(eventClickInfo) => {
       //     console.log('Event clicked:', eventClickInfo.event);
 
@@ -208,10 +216,19 @@ function Calendar() {
         setDeleteModalOpen(false);
       }} />
 
-      <Link to={'/shared-calendar'}>
+      
       <Button
         type='button'
-        onClick={() => alert('share calendar')}
+        onClick={() => {
+          const link = 'http://localhost:5173/sharedcalendar';
+          navigator.clipboard.writeText(link)
+            .then(() => {
+              alert('Link copied to clipboard');
+            })
+            .catch((err) => {
+              console.error('Could not copy link: ', err);
+            });
+        }}
         style={{
           position: 'absolute',
           bottom: '20px',
@@ -223,7 +240,7 @@ function Calendar() {
           cursor: 'pointer'
         }}>
           <Icon as={LinkIcon} color='white' /></Button>
-      </Link>
+    
           </Box>
   )
 }

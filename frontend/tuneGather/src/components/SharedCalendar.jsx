@@ -55,8 +55,6 @@ function SharedCalendar() {
         aspectRatio={1}
         height={'90%'}
         handleWindowResize={true}
-        editable={true}
-        selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
@@ -67,11 +65,21 @@ function SharedCalendar() {
         eventClick={(eventClickInfo) => {
           console.log(eventClickInfo);
           setBookingModalOpen(true);
-          
-        
         }}
         datesSet={(date) => handleDatesSet(date)}
         events={events}
+        eventMouseEnter={(event) => {
+          event.el.style.backgroundColor = '#63B3ED';
+          event.el.style.cursor = 'pointer';
+        }
+        }
+
+        eventMouseLeave={(event) => {
+          event.el.style.backgroundColor = '#3182CE';
+        }
+        }
+
+
       />
 
       <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} />
@@ -81,7 +89,7 @@ function SharedCalendar() {
   );
 }
 
-function renderEventContent(eventInfo) {
+export function renderEventContent(eventInfo) {
   return (
     <>
       <b>{eventInfo.timeText}</b>
@@ -92,4 +100,5 @@ function renderEventContent(eventInfo) {
 
 Modal.setAppElement('#root');
 
-export default SharedCalendar;
+
+export default SharedCalendar ;
