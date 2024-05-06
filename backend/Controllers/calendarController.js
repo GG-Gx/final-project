@@ -1,9 +1,7 @@
-const router = require('express').Router();
 const Event = require('../Models/eventModel');
 const moment = require('moment');
 
-
-router.post('/create-availability', async (req, res) => {
+exports.createAvailability = async (req, res) => {
   console.log('Received POST request to /calendar/create-availability');
   try {
     const { title, start, end } = req.body;
@@ -27,9 +25,9 @@ router.post('/create-availability', async (req, res) => {
     console.error('Error creating availability:', error);
     res.status(500).send('Internal Server Error');
   }
-});
+};
 
-router.get('/get-availability', async (req, res) => {
+exports.getAvailability = async (req, res) => {
   try {
     // Parse the date query parameters
     const start = moment(req.query.start).toDate();
@@ -48,9 +46,9 @@ router.get('/get-availability', async (req, res) => {
     console.error('Error fetching availability:', error);
     res.status(500).send('Internal Server Error');
   }
-});
+};
 
-router.delete('/delete-availability/:id', async (req, res) => {
+exports.deleteAvailability = async (req, res) => {
   try {
     const eventId = req.params.id;
 
@@ -69,10 +67,4 @@ router.delete('/delete-availability/:id', async (req, res) => {
     // If there's an error, return 500 Internal Server Error
     res.status(500).send('Internal Server Error');
   }
-});
-
-
-
-
-
-module.exports = router;
+};

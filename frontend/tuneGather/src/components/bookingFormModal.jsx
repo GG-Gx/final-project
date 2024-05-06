@@ -38,8 +38,8 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
-            <FormLabel>Time Slot</FormLabel>
-            <Input placeholder={ eventClickInfo || "Select Time Slot"} value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} />
+            <FormLabel>Selected Time Slot</FormLabel>
+            <Input placeholder={ eventClickInfo || "Selected Time Slot"} value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} />
 
             {/* <Input placeholder={ eventInfo || "Select Time Slot"} value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} /> */}
 

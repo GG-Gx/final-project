@@ -80,7 +80,7 @@ function Singin () {
           h="2.5rem" size="sm"
           width="6rem"
           borderRadius="23px"
-          >Sign in</Button>
+          >Sign up</Button>
           <Link to={'/login'}><Button
           margin={2}
           h="2.5rem" size="sm"
