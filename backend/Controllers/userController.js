@@ -30,26 +30,17 @@ const loginUser = async (req, res) => {
 
 // sign up user
 const signupUser = async (req, res) => {
-    console.log('signup route hit');
-    try {
-        const { email, password } = req.body;
-        console.log('email:', email);
-        console.log('password, hash:', password);
-        const existingUser = await User.findOne({ email: email });
-        if (existingUser) {
-            return res.status(400).send('User already exists');
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({
-            email,
-            password: hashedPassword
-        });
-        await user.save();
-        res.status(200).send('Signup successful');
-    } catch (error) {
-        console.error('Error signing up:', error);
-        res.status(500).send('Internal Server Error');
-    }
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.signupUser(email, password);
+
+    res.status(200).send({email, user});
+  } catch (error) {
+
+    console.error('Error signing up:', error);
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = { loginUser, signupUser };
