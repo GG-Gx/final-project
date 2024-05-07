@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { 
   Box, 
   Image, 
@@ -18,71 +18,91 @@ import {
   Card,
   background,
   Center,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  FormErrorIcon,
 } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
 
 
 
+
 function Login () {
+
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(email, password);
+  }
+
 
   return (
     <>
     <Flex
+
      direction="column"
      align="center"
      justify="center"
      className="background"
     >
-      <Box
+      <Box 
       border="1px"
       borderColor="white"
       borderRadius="23px"
       padding="2rem"
       background="white"
       >
-        <Heading
-        textAlign={"center"}
-        >Log in</Heading>
         
-        <Box>
-          <InputGroup
-            padding={2}
-          >
-            <Input
-            pr="1rem"
-            type="text"
-            borderRadius="23px"                  
-            placeholder="E-mail" />
-          </InputGroup>
-          <InputGroup
-            padding={2}
-          >
-            <Input
-            pr="1rem"
-            type="text"
-            borderRadius="23px"  
-            placeholder="Password" />
-          </InputGroup>
-          <Link to={'/calendar'} ><Button
+      <form onSubmit={handleSubmit}>
+      <FormControl className = "login"
+      id="email" isRequired
+      
+      >
+        <FormLabel>Email address</FormLabel>
+        <Input 
+        type="email" 
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+        />
+        <FormHelperText>We'll never share your email.</FormHelperText>
+      </FormControl>
+      <FormControl id="password" isRequired>
+        <FormLabel>Password</FormLabel>
+        <Input 
+       
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
+         />
+      </FormControl>
+     
+      <Button type="submit" 
+      colorScheme="blue"
+      >Log in</Button>
+      <Link to={'/signup'}><Button
           margin={2}
           h="2.5rem" size="sm"
           width="6rem"
           borderRadius="23px"
-          >Login</Button></Link>
-          <Link to={'/singin'}><Button
-          margin={2}
-          h="2.5rem" size="sm"
-          width="6rem"
-          borderRadius="23px"
-          >Sign in</Button></Link>
-        </Box>
+          >Sign up</Button></Link>
+      </form>
+          
         
       </Box>
+
+     
+
+
     </Flex>
     </>
   )
 }
-
 
 
 export default Login;

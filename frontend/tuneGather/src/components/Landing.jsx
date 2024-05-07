@@ -48,7 +48,7 @@ function Landing() {
                 <Link to={'/login'}>
                   <MenuItem as="a">Log in</MenuItem>
                 </Link>
-                <Link to={'/singin'}>
+                <Link to={'/signup'}>
                   <MenuItem as='a'>Sign up</MenuItem>
                 </Link>
                 <MenuItem as='a' href='#'>About</MenuItem>

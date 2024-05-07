@@ -12,6 +12,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { Link } from 'react-router-dom';
+import { useLogout } from '../hooks/useLogout';
 
 function Calendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -19,8 +20,11 @@ function Calendar() {
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const calendarRef = useRef(null);
+  const { logout } = useLogout();
 
- 
+  const handleClickLogout =  () => {
+    logout();
+  }
 
   const handleEventAdd = async (event) => {
     try {
@@ -201,21 +205,24 @@ function Calendar() {
 
 
       <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={onEventadded} />
-      <DeleteEventModal isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onEventDeleted={() => {
-        eventClickInfo.event.remove();
-        const eventId = eventClickInfo.event._def.extendedProps._id;
-        console.log('Event ID:', eventId);console.log(eventClickInfo.event.Id);
-        
-        axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`)
-          .then(response => {
-            console.log('Event data deleted successfully:', response.data);
-          })
-          .catch(error => {
-            console.error('Error deleting event data:', error);
-          });
-        setDeleteModalOpen(false);
-      }} />
+      <DeleteEventModal 
+  isOpen={deleteModalOpen} 
+  onClose={() => setDeleteModalOpen(false)} 
+  onEventDeleted={async () => {
+    try {
+      eventClickInfo.event.remove();
+      const eventId = eventClickInfo.event._def.extendedProps._id;
+      console.log('Event ID:', eventId);
 
+      const response = await axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`);
+      console.log('Event data deleted successfully:', response.data);
+    } catch (error) {
+      console.error('Error deleting event data:', error);
+    } finally {
+      setDeleteModalOpen(false);
+    }
+  }} 
+/>
       
       <Button
         type='button'
@@ -240,6 +247,23 @@ function Calendar() {
           cursor: 'pointer'
         }}>
           <Icon as={LinkIcon} color='white' /></Button>
+          <Button
+           type='button'
+            onClick={() => {
+              handleClickLogout();
+            }} style={{
+              position: 'absolute',
+              bottom: '20px',
+              left: '20px',
+              backgroundColor: '#3182CE',
+              color: 'white',
+              borderRadius: '23px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+           >Log out</Button>
+
+
     
           </Box>
   )

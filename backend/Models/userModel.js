@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 
+
+
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -55,6 +58,23 @@ userSchema.statics.signupUser = async function (email, password)  {
 
 };
 
+// static method to login user
+
+
+userSchema.statics.loginUser = async function (email, password) {
+    if (!email || !password) {
+        throw new Error('Email and password are required');
+    }
+    const user = await this.findOne({ email });
+    if (!user) {
+        throw new Error('User not found');
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        throw new Error('Invalid credentials');
+    }
+    return user;
+}
 
 
 

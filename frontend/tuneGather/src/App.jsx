@@ -2,7 +2,7 @@ import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import Landing from './components/Landing'
 import Calendar from './components/Calendar'
-import Singin from './components/Singin'
+import Singup from './components/Singup'
 import SharedCalendar from './components/SharedCalendar'
 
 
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/calendar' element={<Calendar />} />
-          <Route path='/singin' element={<Singin />} />
+          <Route path='/signup' element={<Singup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/sharedcalendar' element={<SharedCalendar />} />
 
