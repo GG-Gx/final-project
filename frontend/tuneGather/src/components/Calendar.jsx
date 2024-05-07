@@ -28,32 +28,29 @@ function Calendar() {
 
   const handleEventAdd = async (event) => {
     try {
-      // Ensure the event object has the required fields
+      // Ensure required fields
       if (!event.start || !event.end || !event.title) {
-        console.error('Missing required fields:', event);
-        return false;
+        console.error('Error: Missing required fields in the event object');
+        return true; // Return synchronously
       }
-  
-      // If all required fields are present, add the event to the calendar
+
+      // Add event to FullCalendar
       const calendarApi = calendarRef.current.getApi();
-      calendarApi.addEvent({ 
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
-  
-      // Send the event data to the server to create
+      calendarApi.addEvent(event);
+      console.log('Event added:', event);
+
+      // Send event data to the server (optional)
       const response = await axios.post('http://localhost:5000/calendar/create-availability', {
         start: event.start,
         end: event.end,
         title: event.title,
       });
-  
+
       console.log('Event added successfully:', response.data);
       return false; // Return synchronously
     } catch (error) {
       console.error('Error adding event:', error);
-      return true;
+      return true; // Or handle the error differently
     }
   };
 
@@ -76,40 +73,7 @@ function Calendar() {
   };
 
 
-  const onEventadded = async (event) => {
-    
-    try {
-      // Ensure the event object has the required fields
-      if (!event.start || !event.end || !event.title) {
-        console.error('Missing required fields:', event);
-        return false;
-      }
-      
-      // If all required fields are present, add the event to the calendar
-      const calendarApi = calendarRef.current.getApi();
-      calendarApi.addEvent({
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
-
-      // Send the event data to the server to create
-
-      const response = await axios.post('http://localhost:5000/calendar/create-availability', {
-        start: event.start,
-        end: event.end,
-        title: event.title,
-      });
-      
-      console.log('Event added successfully:', response.data);
-      return false; // Return synchronously
-
-    } catch (error) {
-      console.error('Error adding event:', error);
-      return true;
-    }
-  }
-
+ 
 
 
 
@@ -204,7 +168,7 @@ function Calendar() {
 
 
 
-      <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={onEventadded} />
+      <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={handleEventAdd} />
       <DeleteEventModal 
   isOpen={deleteModalOpen} 
   onClose={() => setDeleteModalOpen(false)} 
