@@ -1,9 +1,11 @@
 const Event = require('../Models/eventModel');
 const moment = require('moment');
 
+
 exports.createAvailability = async (req, res) => {
   console.log('Received POST request to /calendar/create-availability');
   try {
+    const user_id = req.user._id;
     const { title, start, end } = req.body;
 
     // Check if all required fields are present
@@ -14,7 +16,8 @@ exports.createAvailability = async (req, res) => {
     const event = new Event({
       title,
       start,
-      end
+      end,
+      user_id
     });
 
     await event.save();

@@ -13,9 +13,6 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
     onClose();
   }
 
-  
-
-
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}

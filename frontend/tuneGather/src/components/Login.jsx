@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { useLogin } from "../hooks/useLogin";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { 
   Box, 
   Image, 
@@ -34,11 +36,12 @@ function Login () {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await login(email, password);
   }
 
 
@@ -82,7 +85,9 @@ function Login () {
          />
       </FormControl>
      
-      <Button type="submit" 
+      <Button 
+      disabled={isLoading}
+      type="submit" 
       colorScheme="blue"
       >Log in</Button>
       <Link to={'/signup'}><Button
@@ -91,6 +96,8 @@ function Login () {
           width="6rem"
           borderRadius="23px"
           >Sign up</Button></Link>
+          {error && <Text color="red.500">{error}</Text>}
+
       </form>
           
         

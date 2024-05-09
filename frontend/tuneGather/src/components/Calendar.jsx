@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Box, Button, Heading, Icon } from '@chakra-ui/react';
-import { ExternalLinkIcon, AddIcon,LinkIcon } from '@chakra-ui/icons'
+import { Box, Button, Heading, Icon, Text } from '@chakra-ui/react';
+import { ExternalLinkIcon, AddIcon,LinkIcon, WarningIcon } from '@chakra-ui/icons'
 
 import Modal from 'react-modal';
 import AddEventModal from './addEventModal';
@@ -13,6 +13,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { AuthContext } from '../context/AuthContext';
+import { warning } from 'framer-motion';
 
 function Calendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -21,18 +24,41 @@ function Calendar() {
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const calendarRef = useRef(null);
   const { logout } = useLogout();
+  const authContext = React.useContext(AuthContext);
+
+
+  const user = authContext.auth.user;
+
+  console.log('usuario:', user);
+  console.log('authContext:', authContext);
+
+  
+  
+
+
+ 
 
   const handleClickLogout =  () => {
     logout();
   }
 
   const handleEventAdd = async (event) => {
+
+  
     try {
-      // Ensure required fields
-      if (!event.start || !event.end || !event.title) {
-        console.error('Error: Missing required fields in the event object');
+
+      // Ensure user is logged in
+      if (!user) {
+        console.error('Error: User is not logged in');
         return true; // Return synchronously
       }
+
+      // Ensure required fields
+      if (!event || !event.start || !event.end || !event.title) {
+        console.error('Error: Missing required fields in the event object');
+        return ; // Return synchronously
+      }
+
 
       // Add event to FullCalendar
       const calendarApi = calendarRef.current.getApi();
@@ -40,12 +66,19 @@ function Calendar() {
       console.log('Event added:', event);
 
       // Send event data to the server (optional)
-      const response = await axios.post('http://localhost:5000/calendar/create-availability', {
+      const response = await axios.post('http://localhost:5000/calendar/create-availability',  {
         start: event.start,
         end: event.end,
         title: event.title,
-      });
-
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json', // Example header
+          Authorization: `Bearer ${user.token}`, // Example authorization header
+          // Add other headers as needed
+        },
+      }
+      );
       console.log('Event added successfully:', response.data);
       return false; // Return synchronously
     } catch (error) {
@@ -55,6 +88,15 @@ function Calendar() {
   };
 
   const handleDatesSet = async (date) => {
+
+    
+
+    // Ensure user is logged in
+
+    if (user) {
+    
+
+
     try {
       const startDate = moment(date.start).toISOString();
       const endDate = moment(date.end).toISOString();
@@ -62,14 +104,23 @@ function Calendar() {
       console.log('Fetching availability...');
       console.log('Start date:', startDate);
       console.log('End date:', endDate);
-  
-      const response = await axios.get(`http://localhost:5000/calendar/get-availability?start=${startDate}&end=${endDate}`);
+
       
+      const response = await axios.get(`http://localhost:5000/calendar/get-availability?start=${startDate}&end=${endDate}`, {
+        headers:{
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+        });
+
       console.log('Availability data:', response.data);
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching availability:', error);
     }
+
+    }
+
   };
 
 
@@ -92,7 +143,14 @@ function Calendar() {
       p={5}
       
     >
- 
+       {user && <Text
+        textAlign='left'
+        marginLeft={3}
+        size='s' >{user.email}
+        </Text>}
+
+
+       {user &&  
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
@@ -165,6 +223,7 @@ function Calendar() {
         setDeleteModalOpen(true);
       }}
       />
+    }  
 
 
 
@@ -178,7 +237,12 @@ function Calendar() {
       const eventId = eventClickInfo.event._def.extendedProps._id;
       console.log('Event ID:', eventId);
 
-      const response = await axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`);
+      const response = await axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`,
+      {headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      }}
+      );
       console.log('Event data deleted successfully:', response.data);
     } catch (error) {
       console.error('Error deleting event data:', error);

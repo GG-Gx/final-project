@@ -11,29 +11,39 @@ function AddEventModal({ isOpen, onClose, onEventadded }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+  
     // Check if start, end, and title are defined
     if (!start || !end || !title) {
       console.error('Error: Missing required fields in the event object');
       return;
     }
-
+  
+    // Combine date and time for start and end
+    const startDate = new Date(start);
+    const startTime = new Date(start);
+    const endDate = new Date(end);
+    const endTime = new Date(end);
+  
+    // Set time part for start and end
+    startDate.setHours(startTime.getHours(), startTime.getMinutes());
+    endDate.setHours(endTime.getHours(), endTime.getMinutes());
+  
     // Validate date/time selection (optional)
-    if (start >= end) {
+    if (startDate >= endDate) {
       alert('Error: End date/time cannot be before start date/time!');
       return;
     }
-
+  
     // Create the event object
     const event = {
-      start: start.toISOString(), // Ensure ISO 8601 format
-      end: end.toISOString(), // Ensure ISO 8601 format
-      title,
+      start: startDate.toISOString(), // Ensure ISO 8601 format
+      end: endDate.toISOString(), // Ensure ISO 8601 format
+      title: title || 'time slot',
     };
-
+  
     // Pass the event object to the parent component
     onEventadded(event);
-
+  
     // Close the modal or perform any other necessary actions
     onClose();
   };

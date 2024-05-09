@@ -1,9 +1,23 @@
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
-    start: Date,
-    end: Date,
-    title: String,
+    start: {
+        type: Date,
+        required: true
+    },
+    end: {
+        type: Date,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    user_id: {
+        type: String,
+        required: true
+    }
+
 });
 
 const Event = mongoose.model('Event', eventSchema);
