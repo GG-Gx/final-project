@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text } from "@chakra-ui/react";
-import SharedCalendar, {renderEventContent} from "./SharedCalendar";
 
 function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [timeSlot, setTimeSlot] = useState('');
   const [comment, setComment] = useState('');
   const [formError, setFormError] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
 
-  console.log('Event info', eventClickInfo);
+  useEffect(() => {
+    if (eventClickInfo) {
+      const eventDate = new Date(eventClickInfo.event.start);
+      const day = eventDate.toLocaleDateString('en-US', { weekday: 'long' });
+      const date = eventDate.toLocaleDateString();
+      const time = eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      setSelectedTimeSlot(`${day}, ${date} ${time}`);
+    }
+  }, [eventClickInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !email || !phone || !timeSlot) {
+    if (!name || !email || !phone) {
       setFormError('Please fill in all required fields.');
       return;
     }
@@ -25,7 +33,6 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
     setName('');
     setEmail('');
     setPhone('');
-    setTimeSlot('');
     setComment('');
     setFormError('');
   }
@@ -39,12 +46,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Selected Time Slot</FormLabel>
-            <Input placeholder={ eventClickInfo || "Selected Time Slot"} value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} />
-
-            {/* <Input placeholder={ eventInfo || "Select Time Slot"} value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} /> */}
-
-            
-
+            <Input value={selectedTimeSlot} isReadOnly />
           </FormControl>
 
           <FormControl mt={4}>

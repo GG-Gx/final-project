@@ -74,8 +74,10 @@ function SharedCalendar() {
         eventDisplay='block'
         eventBorderColor='#3182CE'
         eventClick={(eventClickInfo) => {
-          console.log('event info',eventClickInfo);
           setBookingModalOpen(true);
+          setEventClickInfo(eventClickInfo);
+          console.log('Event clicked:', eventClickInfo);
+
         }}
         events={events}
         eventMouseEnter={(event) => {
@@ -87,7 +89,11 @@ function SharedCalendar() {
         }}
       />
 
-      <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} eventClickInfo={eventClickInfo}  />
+      <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} 
+        eventClickInfo={eventClickInfo}
+       />
+
+       
 
     </Box>
   );
