@@ -24,6 +24,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 // Import and use the calendar routes
 const calendarRoutes = require('./routes/routes');
 const userRoutes = require('./routes/user');
+const publicRouter = require('./routes/publicRouter');
+app.use('/public', publicRouter);
 app.use('/user', userRoutes);
 app.use('/calendar', calendarRoutes);
 

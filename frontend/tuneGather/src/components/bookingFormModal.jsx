@@ -10,7 +10,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
   const [comment, setComment] = useState('');
   const [formError, setFormError] = useState('');
 
-  console.log(eventClickInfo);
+  console.log('Event info', eventClickInfo);
 
   const handleSubmit = (e) => {
     e.preventDefault();

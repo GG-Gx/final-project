@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
 import Modal from 'react-modal';
 import AddEventModal from './addEventModal';
@@ -12,24 +13,34 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 function SharedCalendar() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false); // Added
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const calendarRef = useRef(null);
 
+  const { userId } = useParams();
+  console.log('userId:', userId);
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/public/get-availability/${userId}`);
+        const events = response.data.map((event) => ({
+          id: event._id,
+          title: event.title,
+          start: event.start,
+          end: event.end,
+        }));
+        setEvents(events);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
 
-
-  const handleDatesSet = async (date) => {
-    try {
-      const startDate = moment(date.start).toISOString();
-      const endDate = moment(date.end).toISOString();
-
-      const response = await axios.get(`http://localhost:5000/calendar/get-availability?start=${startDate}&end=${endDate}`);
-      setEvents(response.data);
-    } catch (error) {
-      console.error('Error fetching availability:', error);
+    if (userId) {
+      fetchData();
     }
-  };
+  }, [userId]);
 
   return (
     <Box
@@ -63,27 +74,20 @@ function SharedCalendar() {
         eventDisplay='block'
         eventBorderColor='#3182CE'
         eventClick={(eventClickInfo) => {
-          console.log(eventClickInfo);
+          console.log('event info',eventClickInfo);
           setBookingModalOpen(true);
         }}
-        datesSet={(date) => handleDatesSet(date)}
         events={events}
         eventMouseEnter={(event) => {
           event.el.style.backgroundColor = '#63B3ED';
           event.el.style.cursor = 'pointer';
-        }
-        }
-
+        }}
         eventMouseLeave={(event) => {
           event.el.style.backgroundColor = '#3182CE';
-        }
-        }
-
-
+        }}
       />
 
-      <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} />
-
+      <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} eventClickInfo={eventClickInfo}  />
 
     </Box>
   );
@@ -100,5 +104,4 @@ export function renderEventContent(eventInfo) {
 
 Modal.setAppElement('#root');
 
-
-export default SharedCalendar ;
+export default SharedCalendar;

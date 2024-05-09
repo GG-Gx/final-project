@@ -2,6 +2,7 @@ const Event = require('../Models/eventModel');
 const moment = require('moment');
 
 
+
 exports.createAvailability = async (req, res) => {
   console.log('Received POST request to /calendar/create-availability');
   try {
@@ -51,6 +52,37 @@ exports.getAvailability = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+exports.getAvailabilityByuserId = async (req, res) => {
+  try {
+    const user_id = req.params.id;
+
+    if (!user_id) {
+      console.log('User ID is missing in the request.');
+      return res.status(400).send('User ID is missing in the request.');
+    }
+
+    console.log('User ID:', user_id); // Log the user ID received in the request
+
+    const events = await Event.find({ user_id });
+
+    console.log('Availability data:', events); // Log the events fetched
+
+    if (events.length === 0) {
+      console.log('No events found for user:', user_id);
+      return res.status(404).send('No events found for this user.');
+    }
+
+    res.send(events);
+  } catch (error) {
+    console.error('Error fetching availability:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+
+
 
 exports.deleteAvailability = async (req, res) => {
   try {

@@ -22,6 +22,7 @@ function Calendar() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
+  const [userId, setUserId] = useState(null);
   const calendarRef = useRef(null);
   const { logout } = useLogout();
   const authContext = React.useContext(AuthContext);
@@ -113,7 +114,13 @@ function Calendar() {
         }
         });
 
+      
       console.log('Availability data:', response.data);
+
+      const userId = response.data.map(event => event.user_id)[0];
+      console.log('User ID:', userId);
+      setUserId(userId);
+
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching availability:', error);
@@ -124,6 +131,18 @@ function Calendar() {
   };
 
 
+  
+
+  const handleClickCopyLink =  () => {
+      console.log('userId:', userId);
+
+      userId && navigator.clipboard.writeText(`http://localhost:5173/sharedcalendar/${userId}`);
+
+      alert('Link copied to clipboard');
+
+
+
+  };
  
 
 
@@ -254,16 +273,7 @@ function Calendar() {
       
       <Button
         type='button'
-        onClick={() => {
-          const link = 'http://localhost:5173/sharedcalendar';
-          navigator.clipboard.writeText(link)
-            .then(() => {
-              alert('Link copied to clipboard');
-            })
-            .catch((err) => {
-              console.error('Could not copy link: ', err);
-            });
-        }}
+        onClick =  {handleClickCopyLink}
         style={{
           position: 'absolute',
           bottom: '20px',

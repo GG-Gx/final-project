@@ -7,7 +7,7 @@ import SharedCalendar from './components/SharedCalendar'
 import { AuthContext } from './context/AuthContext'
 
 
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate, useParams } from 'react-router-dom'
 import './App.css'
 import Login from './components/Login'
 
@@ -15,6 +15,9 @@ function App() {
   const authContext = React.useContext(AuthContext);
 
   const user = authContext.auth.user;
+
+
+  
 
 
   return (
@@ -25,7 +28,7 @@ function App() {
           <Route path='/calendar' element={!user ? <Navigate to = '/'/> : <Calendar />   } />
           <Route path='/signup' element={user ? <Navigate to = '/calendar' /> : <Singup />  } />
           <Route path='/login' element={user ? <Navigate to = '/calendar' /> : <Login /> } />
-          <Route path='/sharedcalendar' element={<SharedCalendar />} />
+          <Route path='/sharedcalendar/:userId' element={<SharedCalendar />} />
 
 
         </Routes>
