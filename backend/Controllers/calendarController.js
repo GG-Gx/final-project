@@ -35,12 +35,13 @@ exports.getAvailability = async (req, res) => {
     // Parse the date query parameters
     const start = moment(req.query.start).toDate();
     const end = moment(req.query.end).toDate();
+    const user_id = req.user._id;
 
     console.log('Fetching availability...');
     console.log('Start date:', start);
     console.log('End date:', end);
 
-    const events = await Event.find({ start: { $gte: start }, end: { $lte: end } });
+    const events = await Event.find({ start: { $gte: start }, end: { $lte: end }, user_id });
 
     console.log('Availability data:', events);
 
