@@ -140,7 +140,7 @@ function Calendar() {
       console.log('userId:', userId);
 
 
-      userId && navigator.clipboard.writeText(`https://final-project-navy.vercel.app/sharedcalendar/${userEmail}/${userId}`);
+      userId && navigator.clipboard.writeText(`https://admirable-halva-1c9c04.netlify.app/sharedcalendar/${userEmail}/${userId}`);
 
       alert('Link copied to clipboard');
 
