@@ -10,9 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware for handling CORS
-app.use(cors({ origin: ['*'],
-methods: ['*'],
-}));
+app.use(cors())
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,10 +25,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 const calendarRoutes = require('./routes/routes');
 const userRoutes = require('./routes/user');
 const publicRouter = require('./routes/publicRouter');
-app.get('/', (req, res) => {
-  res.send('tuneGather: the API');
-}
-);
+
+
 app.use('/public', publicRouter);
 app.use('/user', userRoutes);
 app.use('/calendar', calendarRoutes);
