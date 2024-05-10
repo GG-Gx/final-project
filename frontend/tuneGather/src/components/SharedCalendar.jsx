@@ -17,8 +17,10 @@ function SharedCalendar() {
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const calendarRef = useRef(null);
-
   const { userId } = useParams();
+  const { userEmail } = useParams();
+
+  console.log('userEmail:', userEmail);
   console.log('userId:', userId);
  
   useEffect(() => {
@@ -90,8 +92,7 @@ function SharedCalendar() {
       />
 
       <BookingFormModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} 
-        eventClickInfo={eventClickInfo}
-       />
+        eventClickInfo={eventClickInfo} userEmail={userEmail} />
 
        
 

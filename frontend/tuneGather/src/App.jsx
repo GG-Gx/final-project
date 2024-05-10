@@ -28,7 +28,7 @@ function App() {
           <Route path='/calendar' element={!user ? <Navigate to = '/'/> : <Calendar />   } />
           <Route path='/signup' element={user ? <Navigate to = '/calendar' /> : <Singup />  } />
           <Route path='/login' element={user ? <Navigate to = '/calendar' /> : <Login /> } />
-          <Route path='/sharedcalendar/:userId' element={<SharedCalendar />} />
+          <Route path='/sharedcalendar/:userEmail/:userId' element={<SharedCalendar />} />
 
 
         </Routes>

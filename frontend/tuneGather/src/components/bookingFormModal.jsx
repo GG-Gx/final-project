@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text } from "@chakra-ui/react";
+import axios from 'axios';
 
-function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
+function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,21 +21,37 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
     }
   }, [eventClickInfo]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !email || !phone) {
       setFormError('Please fill in all required fields.');
       return;
     }
-    // Handle form submission
-    console.log("Form submitted");
-    onClose(); // Close the modal
-    // Clear input fields
-    setName('');
-    setEmail('');
-    setPhone('');
-    setComment('');
-    setFormError('');
+
+    try {
+      const response = await axios.post('http://localhost:5000/public/send-email', {
+        email,
+        formData: {
+          time: selectedTimeSlot,
+          name,
+          email,
+          phone,
+          comment
+        }
+      });
+      
+      console.log(response.data); // Log server response
+      onClose(); // Close the modal
+      // Clear input fields
+      setName('');
+      setEmail('');
+      setPhone('');
+      setComment('');
+      setFormError('');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setFormError('Error sending email. Please try again later.');
+    }
   }
 
   return (
@@ -45,6 +62,8 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo }) {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
+            <FormLabel>Teacher</FormLabel>
+            <Input value={userEmail} isReadOnly />        
             <FormLabel>Selected Time Slot</FormLabel>
             <Input value={selectedTimeSlot} isReadOnly />
           </FormControl>

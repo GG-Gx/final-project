@@ -29,6 +29,8 @@ function Calendar() {
 
 
   const user = authContext.auth.user;
+  const userEmail = user.email;
+ 
 
   console.log('usuario:', user);
   console.log('authContext:', authContext);
@@ -134,9 +136,11 @@ function Calendar() {
   
 
   const handleClickCopyLink =  () => {
+      console.log('userEmail:', userEmail);
       console.log('userId:', userId);
 
-      userId && navigator.clipboard.writeText(`http://localhost:5173/sharedcalendar/${userId}`);
+
+      userId && navigator.clipboard.writeText(`http://localhost:5173/sharedcalendar/${userEmail}/${userId}`);
 
       alert('Link copied to clipboard');
 
