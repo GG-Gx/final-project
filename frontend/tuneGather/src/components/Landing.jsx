@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { 
   Box, 
   Image, 
@@ -25,7 +24,7 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 
 
 
-HamburgerIcon
+
 
 function Landing() {
     return (
@@ -45,13 +44,11 @@ function Landing() {
                 variant='outline'
                 width={20} style={{ padding:'10px', marginRight: '30px'}}>Menu</MenuButton>
                 <MenuList>
-                <Link to={'/login'}>
-                  <MenuItem as="a">Log in</MenuItem>
-                </Link>
-                <Link to={'/signup'}>
-                  <MenuItem as='a'>Sign up</MenuItem>
-                </Link>
-                <MenuItem as='a' href='#'>About</MenuItem>
+                  <MenuItem  as='a' href='/login'>Log in</MenuItem>
+              
+                  <MenuItem as='a' href='/signup'>Sign up</MenuItem>
+                
+                  <MenuItem as='a' >About</MenuItem>
               </MenuList>
               </Menu>
             </Box>
