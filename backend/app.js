@@ -10,9 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware for handling CORS
-app.use(cors({ origin: ['*'],
-methods: ['*'],
-}));
+app.use(cors());
 
 // Body parser middleware
 app.use(bodyParser.json());
