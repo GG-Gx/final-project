@@ -1,7 +1,7 @@
 {
   "name": "tunegather",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://final-project-navy.vercel.app",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

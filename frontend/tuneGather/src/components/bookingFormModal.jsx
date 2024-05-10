@@ -29,7 +29,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/public/send-email', {
+      const response = await axios.post('https://final-project-navy.vercel.app/public/send-email', {
         email,
         formData: {
           time: selectedTimeSlot,

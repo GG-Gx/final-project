@@ -69,7 +69,7 @@ function Calendar() {
       console.log('Event added:', event);
 
       // Send event data to the server (optional)
-      const response = await axios.post('http://localhost:5000/calendar/create-availability',  {
+      const response = await axios.post('https://final-project-navy.vercel.app/calendar/create-availability',  {
         start: event.start,
         end: event.end,
         title: event.title,
@@ -109,7 +109,7 @@ function Calendar() {
       console.log('End date:', endDate);
 
       
-      const response = await axios.get(`http://localhost:5000/calendar/get-availability?start=${startDate}&end=${endDate}`, {
+      const response = await axios.get(`https://final-project-navy.vercel.app/calendar/get-availability?start=${startDate}&end=${endDate}`, {
         headers:{
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user.token}`
@@ -140,7 +140,7 @@ function Calendar() {
       console.log('userId:', userId);
 
 
-      userId && navigator.clipboard.writeText(`http://localhost:5173/sharedcalendar/${userEmail}/${userId}`);
+      userId && navigator.clipboard.writeText(`https://final-project-navy.vercel.app/sharedcalendar/${userEmail}/${userId}`);
 
       alert('Link copied to clipboard');
 
@@ -230,7 +230,7 @@ function Calendar() {
       //     console.log(eventClickInfo.event.Id);
       //     eventClickInfo.event.remove();
           
-      //           axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`)
+      //           axios.delete(`https://final-project-navy.vercel.app//calendar/delete-availability/${eventId}`)
       //             .then(response => {
       //               console.log('Event data deleted successfully:', response.data);
       //             })
@@ -260,7 +260,7 @@ function Calendar() {
       const eventId = eventClickInfo.event._def.extendedProps._id;
       console.log('Event ID:', eventId);
 
-      const response = await axios.delete(`http://localhost:5000/calendar/delete-availability/${eventId}`,
+      const response = await axios.delete(`https://final-project-navy.vercel.app/calendar/delete-availability/${eventId}`,
       {headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${user.token}`,

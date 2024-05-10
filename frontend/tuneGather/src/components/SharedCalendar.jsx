@@ -26,7 +26,7 @@ function SharedCalendar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/public/get-availability/${userId}`);
+        const response = await axios.get(`https://final-project-navy.vercel.app/public/get-availability/${userId}`);
         const events = response.data.map((event) => ({
           id: event._id,
           title: event.title,
