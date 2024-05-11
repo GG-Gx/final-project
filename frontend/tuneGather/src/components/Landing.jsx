@@ -21,12 +21,19 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import NavBar from './NavBar';
+import SearchBar from './SearchBar';
+
 
 
 
 
 
 function Landing() {
+
+
+
+
     return (
       <Flex
       direction="column"
@@ -35,68 +42,35 @@ function Landing() {
       >
 
           <Box className="background">
-            <Box textAlign="right" padding={2}>
-              <Menu style={{ padding: '20px', marginRight: '30px' }}>
-                <MenuButton
-                as={IconButton}
-                aria-label='Options'
-                icon={<HamburgerIcon />}
-                variant='outline'
-                width={20} style={{ padding:'10px', marginRight: '30px'}}>Menu</MenuButton>
-                <MenuList>
-                  <MenuItem  as='a' href='/login'>Log in</MenuItem>
-              
-                  <MenuItem as='a' href='/signup'>Sign up</MenuItem>
-                
-                  <MenuItem as='a' >About</MenuItem>
-              </MenuList>
-              </Menu>
-            </Box>
-            <Divider />
 
+            <NavBar />
+
+            
             <Box className = 'boxBig'>
             
 
-              <Box className='tuneGatherbox' style={{ padding: '100px' }}>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" marginBottom='10px'>
 
 
-                <Heading as="h1" size="2xl" textAlign="center" margin="2rem" className='bigLogo'>
-                  tuneGather
+                <Heading  as="h1" size="xl" textShadow='2px 3px 0px rgba(150, 150, 150, 1)' padding='20px'  style={{  fontFamily: 'Lato'  }}>
+                The easiest way to schedule music lessons!
                 </Heading>
-                <Text style={{ margin: 'auto', padding: '5px', color:'black', fontFamily: 'Lato',  }}>
-                  Calendar for booking freelancers music teachers
-                </Text>
 
-                <InputGroup
-                  size="md"
-                  margin="auto"
-                  marginBottom="20px"
-                  maxWidth="400px"
-                >
-                  <Input
-                    pr="1rem"
-                    type="text"
-                    placeholder="Search for music teachers"
-                    borderRadius="23px"
-                  />
-                  <InputRightElement width="6rem"
-                  >
-                    <Button h="2.5rem" size="sm"
-                    width="6rem"
-                    borderTopRightRadius="23px" 
-                    borderBottomRightRadius="23px"
-                    
-                    >
-                      Search
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
+                <Heading as="h2" size="lg"  padding='20px' style={{  fontFamily: 'Lato'  }} marginBottom='10px'>
+                sign up now to get started
+                or 
+                search for music teachers
+                
+                </Heading>
+                <SearchBar />
+
               </Box>
 
 
 
 
-              <Box >
+
+              {/* <Box >
               
   <Stack direction='row' spacing={10} align='center' style={{color:'white'}}>
     <Box display="flex" justifyContent="center" alignItems="center" style={{}}>
@@ -159,11 +133,11 @@ function Landing() {
       </Button>
     </Box>
   </Stack>
-</Box>
+</Box> */}
 
               
           
-            </Box>
+          </Box>
 
 
           </Box>  

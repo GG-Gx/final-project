@@ -27,7 +27,7 @@ import {
   FormErrorIcon,
 } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
-
+import NavBar from "./NavBar";
 
 
 
@@ -47,6 +47,7 @@ function Login () {
 
   return (
     <>
+     <NavBar/>
     <Flex
 
      direction="column"
@@ -54,12 +55,16 @@ function Login () {
      justify="center"
      className="background"
     >
+    
+     
+      
       <Box 
       border="1px"
       borderColor="white"
       borderRadius="23px"
       padding="2rem"
       background="white"
+      color='black'
       >
         
       <form onSubmit={handleSubmit}>
@@ -102,6 +107,7 @@ function Login () {
           
         
       </Box>
+
 
      
 

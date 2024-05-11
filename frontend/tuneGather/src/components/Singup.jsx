@@ -26,6 +26,7 @@ import {
   FormErrorIcon,
 } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 
 
@@ -46,12 +47,14 @@ function Singup () {
 
   return (
     <>
+      <NavBar/>
     <Flex
 
      direction="column"
      align="center"
      justify="center"
      className="background"
+     color="black"
     >
       <Box 
       border="1px"

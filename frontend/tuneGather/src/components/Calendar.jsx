@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Box, Button, Heading, Icon, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, Icon, MenuItem, Text } from '@chakra-ui/react';
 import { ExternalLinkIcon, AddIcon,LinkIcon, WarningIcon } from '@chakra-ui/icons'
 
 import Modal from 'react-modal';
@@ -16,6 +16,7 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { AuthContext } from '../context/AuthContext';
 import { warning } from 'framer-motion';
+import NavBar from './NavBar';
 
 function Calendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -30,6 +31,8 @@ function Calendar() {
 
   const user = authContext.auth.user;
   const userEmail = user.email;
+
+  
  
 
   console.log('usuario:', user);
@@ -144,20 +147,14 @@ function Calendar() {
 
       alert('Link copied to clipboard');
 
-
-
   };
- 
-
-
-
-    
-
-
 
   return (
+    <>
+   
+    <NavBar/>
     <Box
-      style={{ position: 'relative', zIndex: 0 }}
+      style={{ position: 'relative', zIndex: 0}}
       height={['90%', '80%']}
       width={['90%', '70%']}
       shadow='lg'
@@ -222,24 +219,7 @@ function Calendar() {
           event.el.style.backgroundColor = '#3182CE';
         }
         }
-      //   eventClick={(eventClickInfo) => {
-      //     console.log('Event clicked:', eventClickInfo.event);
 
-      //     const eventId = eventClickInfo.event._def.extendedProps._id;
-      //     console.log('Event ID:', eventId);
-      //     console.log(eventClickInfo.event.Id);
-      //     eventClickInfo.event.remove();
-          
-      //           axios.delete(`https://final-project-navy.vercel.app//calendar/delete-availability/${eventId}`)
-      //             .then(response => {
-      //               console.log('Event data deleted successfully:', response.data);
-      //             })
-      //             .catch(error => {
-      //               console.error('Error deleting event data:', error);
-      //             });
-      //             return false;
-      //   }
-      // }
       eventClick={(eventClickInfo) => {
         console.log('Event clicked:', eventClickInfo.event);
         setEventClickInfo(eventClickInfo);
@@ -250,7 +230,41 @@ function Calendar() {
 
 
 
-      <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={handleEventAdd} />
+     
+      
+      <Button
+        type='button'
+        
+        
+        onClick =  {handleClickCopyLink}
+        style={{
+          position: 'absolute',
+          right: '20px',
+          backgroundColor: '#3182CE',
+          color: 'white',
+          borderRadius: '23px',
+          border: 'none',
+          cursor: 'pointer',
+          padding: '10px',
+        
+        }}>
+          <Icon as={LinkIcon} color='white' /></Button>
+          <Button
+           type='button'
+            onClick={() => {
+              handleClickLogout();
+            }} style={{
+              position: 'absolute',
+              left: '20px',
+              backgroundColor: '#3182CE',
+              color: 'white',
+              borderRadius: '23px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+           >Log out</Button>
+
+<AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={handleEventAdd} />
       <DeleteEventModal 
   isOpen={deleteModalOpen} 
   onClose={() => setDeleteModalOpen(false)} 
@@ -274,40 +288,11 @@ function Calendar() {
     }
   }} 
 />
-      
-      <Button
-        type='button'
-        onClick =  {handleClickCopyLink}
-        style={{
-          position: 'absolute',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: '#3182CE',
-          color: 'white',
-          borderRadius: '23px',
-          border: 'none',
-          cursor: 'pointer'
-        }}>
-          <Icon as={LinkIcon} color='white' /></Button>
-          <Button
-           type='button'
-            onClick={() => {
-              handleClickLogout();
-            }} style={{
-              position: 'absolute',
-              bottom: '20px',
-              left: '20px',
-              backgroundColor: '#3182CE',
-              color: 'white',
-              borderRadius: '23px',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-           >Log out</Button>
 
 
     
           </Box>
+          </>
   )
 }
 
@@ -318,6 +303,7 @@ function renderEventContent(eventInfo) {
       <i> {eventInfo.event.title}</i>
     </>
   )
+  
 }
 
 Modal.setAppElement('#root');

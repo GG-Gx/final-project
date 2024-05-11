@@ -11,7 +11,7 @@ export const useSignup = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/user/signup', {
+      const response = await fetch('https://final-project-navy.vercel.app/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
