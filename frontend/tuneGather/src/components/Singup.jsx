@@ -67,23 +67,32 @@ function Singup () {
       <form onSubmit={handleSubmit}>
       <FormControl 
       className="signup"
-      id="email" isRequired
+      id="email" 
+      isRequired
+      isInvalid={error && error.field === "email"}
       >
         <FormLabel>Email address</FormLabel>
         <Input 
         type="email" 
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        placeholder="Enter your email"
         />
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
-      <FormControl id="password" isRequired>
+      <FormControl id="password" 
+                    isRequired
+                    mt={6}
+                    isInvalid={error && error.field === "try another password"}
+                    >
+                    
         <FormLabel>Password</FormLabel>
         <Input 
        
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        placeholder="Enter your password"
          />
       </FormControl>
       
@@ -102,6 +111,7 @@ function Singup () {
           </Button>
           </Link>
           {error && <Text color="red.500">{error}</Text>}
+          {isLoading && <Text>Loading...</Text>}
       </form>
           
         

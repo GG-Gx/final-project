@@ -71,12 +71,13 @@ function Login () {
       <FormControl className = "login"
       id="email" isRequired
       
+      
       >
         <FormLabel>Email address</FormLabel>
         <Input 
         type="email" 
         onChange={(e) => setEmail(e.target.value)}
-        value={email}
+        
         />
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
@@ -86,7 +87,7 @@ function Login () {
        
         type="password"
         onChange={(e) => setPassword(e.target.value)}
-        value={password}
+        value={password} 
          />
       </FormControl>
      
@@ -102,6 +103,7 @@ function Login () {
           borderRadius="23px"
           >Sign up</Button></Link>
           {error && <Text color="red.500">{error}</Text>}
+          
 
       </form>
           
