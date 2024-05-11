@@ -53,6 +53,7 @@ function SharedCalendar() {
       borderRadius='23px'
       bg='#f5f5f5'
       p={5}
+      margin='auto'
     >
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

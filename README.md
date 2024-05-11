@@ -1,5 +1,8 @@
 # final-project
 
+
+front-end deployment : https://admirable-halva-1c9c04.netlify.app/
+
 API:
 
 https://final-project-navy.vercel.app/
