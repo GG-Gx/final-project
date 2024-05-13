@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Box, Button, Heading, Icon, MenuItem, Text } from '@chakra-ui/react';
-import { ExternalLinkIcon, AddIcon,LinkIcon, WarningIcon } from '@chakra-ui/icons'
+import { Box, Button, Heading, Icon, MenuItem, Text, useToast } from '@chakra-ui/react';
+import { ExternalLinkIcon, AddIcon,LinkIcon, WarningIcon, CopyIcon } from '@chakra-ui/icons'
 
 import Modal from 'react-modal';
 import AddEventModal from './addEventModal';
@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { AuthContext } from '../context/AuthContext';
-import { warning } from 'framer-motion';
 import NavBar from './NavBar';
 
 function Calendar() {
@@ -27,6 +26,8 @@ function Calendar() {
   const calendarRef = useRef(null);
   const { logout } = useLogout();
   const authContext = React.useContext(AuthContext);
+  const toast = useToast();
+
 
 
   const user = authContext.auth.user;
@@ -145,7 +146,13 @@ function Calendar() {
 
       userId && navigator.clipboard.writeText(`https://admirable-halva-1c9c04.netlify.app/sharedcalendar/${userEmail}/${userId}`);
 
-      alert('Link copied to clipboard');
+      toast({
+        title: 'Link copied to clipboard',
+        description: 'Share this link to show your availability to others!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
 
   };
 
@@ -248,7 +255,7 @@ function Calendar() {
           padding: '10px',
         
         }}>
-          <Icon as={LinkIcon} color='white' /></Button>
+          <Icon as={CopyIcon} color='white' /></Button>
           <Button
            type='button'
             onClick={() => {

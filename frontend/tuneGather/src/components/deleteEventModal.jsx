@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Button } from "@chakra-ui/react";
-import Modal from 'react-modal';
+import { Box, Flex, Heading, Button, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
 export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
 
   const confirmDeleteEvent = () => {
@@ -15,7 +14,7 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
 
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose}
+    <Modal isOpen={isOpen} onRequestClose={onClose} isCentered
       style={{
         content: {
           width: '30%',
@@ -34,9 +33,10 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
         },
-      }}
-    
+      }} 
     >
+              <ModalOverlay />
+      <ModalContent>
       <Box>
         <Flex
           
@@ -53,6 +53,7 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
           <Button onClick={cancelDeleteEvent} colorScheme="blue"> Cancel </Button>
         </Flex>
       </Box>
+      </ModalContent>
     </Modal>
   );
 }
