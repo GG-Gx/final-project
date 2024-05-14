@@ -17,6 +17,14 @@ function CopyLinkModal  ({ isOpen, onClose, eventClickInfo, copyLink }) {
           <Input value={copyLink} isReadOnly />
         </ModalBody>
         <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={
+            () => {
+              navigator.clipboard.writeText(copyLink);
+              onClose();
+            }
+          
+          }>Copy</Button>
+
           <Button colorScheme="blue" onClick={onClose}
           borderRadius={23}
           >Close</Button>
