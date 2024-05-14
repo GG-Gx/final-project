@@ -15,11 +15,14 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { AuthContext } from '../context/AuthContext';
+import CopyLinkModal from './copyLinkModal';
 import NavBar from './NavBar';
 
 function Calendar() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [copyLinkModalOpen, setCopyLinkModalOpen] = useState(false);
+  const [copyLink, setCopyLink] = useState('');
   const [events, setEvents] = useState([]);
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -143,16 +146,9 @@ function Calendar() {
       console.log('userEmail:', userEmail);
       console.log('userId:', userId);
 
+      setCopyLink(`https://admirable-halva-1c9c04.netlify.app/sharedcalendar/${userEmail}/${userId}`);
 
-      userId && navigator.clipboard.writeText(`https://admirable-halva-1c9c04.netlify.app/sharedcalendar/${userEmail}/${userId}`);
-
-      toast({
-        title: 'Link copied to clipboard',
-        description: 'Share this link to show your availability to others!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
+      setCopyLinkModalOpen(true);
 
   };
 
@@ -255,7 +251,7 @@ function Calendar() {
           padding: '10px',
         
         }}>
-          <Icon as={CopyIcon} color='white' /></Button>
+          <Icon as={LinkIcon} color='white' /></Button>
           <Button
            type='button'
             onClick={() => {
@@ -296,6 +292,8 @@ function Calendar() {
   }} 
 />
 
+<CopyLinkModal isOpen={copyLinkModalOpen} onClose={() => setCopyLinkModalOpen(false)} copyLink={copyLink} />
+
 
     
           </Box>
@@ -315,4 +313,4 @@ function renderEventContent(eventInfo) {
 
 Modal.setAppElement('#root');
 
-export default Calendar;
+export default  Calendar;

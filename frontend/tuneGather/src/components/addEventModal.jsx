@@ -34,17 +34,19 @@ function AddEventModal({ isOpen, onClose, onEventadded }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered
+    borderRadius="23px"
     >
       <ModalOverlay />
       <ModalContent>
         <Flex direction="column" alignItems="center" justifyContent="center" p={8}>
-          <form onSubmit={onSubmit} style={{ width: '100%' }}>
+          <form onSubmit={onSubmit} style={{ width: '100%', borderRadius:'23px' }} >
             <FormControl mb={4}>
               <Input
                 value={title}
                 placeholder="Title"
                 onChange={(e) => setTitle(e.target.value)}
                 style={{ width: '100%' }}
+                borderRadius={23}
               />
             </FormControl>
             <FormControl mb={4}>
@@ -54,6 +56,7 @@ function AddEventModal({ isOpen, onClose, onEventadded }) {
                 value={start}
                 onChange={(e) => setStart(e.target.value)}
                 style={{ width: '100%' }}
+                borderRadius={23}
               />
             </FormControl>
             <FormControl mb={4}>
@@ -63,6 +66,7 @@ function AddEventModal({ isOpen, onClose, onEventadded }) {
                 value={end}
                 onChange={(e) => setEnd(e.target.value)}
                 style={{ width: '100%' }}
+                borderRadius={23}
               />
             </FormControl>
             <Button
