@@ -2,7 +2,7 @@ const nodeMailer = require('nodemailer');
 
 const sendEmail = async (req, res) => {
   try {
-    const { email, formData } = req.body;
+    const { userEmail, formData } = req.body;
 
     const transporter = nodeMailer.createTransport({
       host: 'smtp.mail.de',
@@ -16,7 +16,7 @@ const sendEmail = async (req, res) => {
 
     const messageEmail = {
       from: process.env.EMAIL,
-      to: email, // Use 'email' instead of 'userEmail'
+      to: userEmail, // Use 'email' instead of 'userEmail'
       subject: 'tuneGather: Lesson Request',
       html: `
       <p>Hi, ${email}!</p>
