@@ -19,7 +19,7 @@ const sendEmail = async (req, res) => {
       to: userEmail, // Use 'email' instead of 'userEmail'
       subject: 'tuneGather: Lesson Request',
       html: `
-      <p>Hi, ${email}!</p>
+      <p>Hi, ${userEmail}!</p>
       <p>Time slot: ${formData.time}</p>
       <p>Name: ${formData.name}</p>
       <p>Email: ${formData.email}</p>
