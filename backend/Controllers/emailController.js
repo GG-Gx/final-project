@@ -16,10 +16,10 @@ const sendEmail = async (req, res) => {
 
     const messageEmail = {
       from: process.env.EMAIL,
-      to: recipientEmail, // Use 'email' instead of 'userEmail'
+      to: recipientEmail, 
       subject: 'tuneGather: Lesson Request',
       html: `
-      <p>Hi, ${formData.recipientEmail}!</p>
+      <p>Hi, ${recipientEmail}!</p>
       <p>Time slot: ${formData.time}</p>
       <p>Name: ${formData.name}</p>
       <p>Email: ${formData.email}</p>
