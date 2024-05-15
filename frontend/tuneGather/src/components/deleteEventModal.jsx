@@ -1,11 +1,22 @@
 import React from 'react';
-import { Box, Flex, Heading, Button, Modal, ModalOverlay, ModalContent } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button, Modal, ModalOverlay, ModalContent, useToast} from "@chakra-ui/react";
 export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
+
+
+  const toast = useToast();
+
+  
 
   const confirmDeleteEvent = () => {
     // Perform the deletion action
     onEventDeleted();
     onClose();
+    toast({
+      title: "Event deleted",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
   }
 
   const cancelDeleteEvent = () => {
@@ -36,8 +47,14 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
       }} 
     >
               <ModalOverlay />
-      <ModalContent>
-      <Box>
+      <ModalContent
+        borderRadius="23px"
+        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+        p={4}
+      >
+      <Box
+ 
+      >
         <Flex
           
           direction="column"
@@ -49,8 +66,8 @@ export default function DeleteEventModal({ isOpen, onClose, onEventDeleted }) {
           color="black"
         >
           <Heading as="h2" size="lg" mb={4}>Delete Event</Heading>
-          <Button onClick={confirmDeleteEvent} colorScheme="red" mb={4}> Delete</Button>
-          <Button onClick={cancelDeleteEvent} colorScheme="blue"> Cancel </Button>
+          <Button onClick={confirmDeleteEvent} colorScheme="red" mb={4} borderRadius={23}> Delete</Button>
+          <Button onClick={cancelDeleteEvent} colorScheme="blue" borderRadius={23}> Cancel </Button>
         </Flex>
       </Box>
       </ModalContent>

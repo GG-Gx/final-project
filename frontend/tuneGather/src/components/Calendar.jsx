@@ -89,6 +89,13 @@ function Calendar() {
         },
       }
       );
+      toast({
+        title: 'Event added',
+        description: 'Your availability has been added to the calendar.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
       console.log('Event added successfully:', response.data);
       return false; // Return synchronously
     } catch (error) {

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text, useToast } from "@chakra-ui/react";
 
 
 function CopyLinkModal  ({ isOpen, onClose, eventClickInfo, copyLink }) {
+
+  const toast=useToast();
 
 
   return (
@@ -17,16 +19,22 @@ function CopyLinkModal  ({ isOpen, onClose, eventClickInfo, copyLink }) {
           <Input value={copyLink} isReadOnly />
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={
+          <Button colorScheme="blue" mr={3} borderRadius={23} onClick={
             () => {
               navigator.clipboard.writeText(copyLink);
+              toast({
+                title: "Link copied to clipboard",
+                status: "success",
+                duration: 2000,
+                isClosable: true,
+              });
               onClose();
             }
           
           }>Copy</Button>
 
-          <Button colorScheme="blue" onClick={onClose}
-          borderRadius={23}
+          <Button colorScheme="red" borderRadius={23} onClick={onClose}
+          
           >Close</Button>
         </ModalFooter>
       </ModalContent>

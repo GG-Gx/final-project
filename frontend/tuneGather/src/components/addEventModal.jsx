@@ -37,7 +37,10 @@ function AddEventModal({ isOpen, onClose, onEventadded }) {
     borderRadius="23px"
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent
+      borderRadius="23px"
+      
+      >
         <Flex direction="column" alignItems="center" justifyContent="center" p={8}>
           <form onSubmit={onSubmit} style={{ width: '100%', borderRadius:'23px' }} >
             <FormControl mb={4}>

@@ -98,6 +98,9 @@ function Signup() {
               </Link>
             </Text>
           </form>
+          {error && error.field === "general" && (
+            <Text color="red.500">{error.message}</Text>
+          )}
         </Box>
       </Flex>
     </>
