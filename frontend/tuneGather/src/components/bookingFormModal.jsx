@@ -30,8 +30,9 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
 
     try {
       const response = await axios.post('https://final-project-navy.vercel.app/public/send-email', {
-        email,
+        
         formData: {
+          to: userEmail,
           time: selectedTimeSlot,
           name,
           email,
@@ -63,7 +64,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Teacher</FormLabel>
-            <Input value={userEmail} isReadOnly />        
+            <Input type="text" value={userEmail}  isReadOnly />        
             <FormLabel>Selected Time Slot</FormLabel>
             <Input value={selectedTimeSlot} isReadOnly />
           </FormControl>
