@@ -23,6 +23,7 @@ import {
 import { HamburgerIcon } from '@chakra-ui/icons';
 import NavBar from './NavBar';
 import SearchBar from './SearchBar';
+import { Link } from 'react-router-dom';
 
 
 
@@ -57,12 +58,19 @@ function Landing() {
                 </Heading>
 
                 <Heading as="h2" size="lg"  padding='20px' style={{  fontFamily: 'Lato'  }} marginBottom='10px'>
-                sign up now to get started
-                or 
-                search for music teachers
+                 <Link
+                  to='/signup'
+                  style={{ color: '#fa0559',  fontWeight: 'bold'}}
+
+                 >sign up </Link>
+                 now to get started
+                </Heading>
+                <Heading as="h2" size="lg"  style={{  fontFamily: 'Lato'  }} marginBottom='10px'>
+                 
+                 and share your availability with your students
                 
                 </Heading>
-                <SearchBar />
+           
 
               </Box>
 

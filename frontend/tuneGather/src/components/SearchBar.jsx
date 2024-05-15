@@ -23,6 +23,7 @@ import {
 
 
 function SearchBar() {
+ 
 
   return (
     <>
