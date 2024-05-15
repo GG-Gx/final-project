@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, Button, Text, useToast } from "@chakra-ui/react";
 import axios from 'axios';
 
 function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
@@ -9,6 +9,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
   const [comment, setComment] = useState('');
   const [formError, setFormError] = useState('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const toast = useToast();
 
   useEffect(() => {
     if (eventClickInfo) {
@@ -49,6 +50,13 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
       setPhone('');
       setComment('');
       setFormError('');
+      toast({
+        title: 'Email sent',
+        description: 'Your booking request has been sent to the teacher.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Error sending email:', error);
       setFormError('Error sending email. Please try again later.');
@@ -103,6 +111,7 @@ function BookingFormModal({ isOpen, onClose, eventClickInfo, userEmail }) {
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
+      
     </Modal>
   );
 }
