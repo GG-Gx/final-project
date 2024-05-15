@@ -2,7 +2,7 @@ const nodeMailer = require('nodemailer');
 
 const sendEmail = async (req, res) => {
   try {
-    const { recipientEmail, formData } = req.body;
+    const { userEmail, formData } = req.body;
 
     const transporter = nodeMailer.createTransport({
       host: 'smtp.mail.de',
@@ -16,10 +16,10 @@ const sendEmail = async (req, res) => {
 
     const messageEmail = {
       from: process.env.EMAIL,
-      to: recipientEmail, 
+      to: userEmail, 
       subject: 'tuneGather: Lesson Request',
       html: `
-      <p>Hi, ${recipientEmail}!</p>
+      <p>Hi, ${userEmail}!</p>
       <p>Time slot: ${formData.time}</p>
       <p>Name: ${formData.name}</p>
       <p>Email: ${formData.email}</p>
