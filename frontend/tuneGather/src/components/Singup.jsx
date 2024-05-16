@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
+import validator from "validator";
 import {
   Box,
   Button,
@@ -17,11 +18,20 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signup, error, isLoading } = useSignup();
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [errorEmail, setErrorEmail] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(email, password);
   };
+
+  const validatePassword = (password) => {
+    if (password.length < 8 || password.length > 20 || !validator.isStrongPassword(password) || !validator.isAlphanumeric(password) ) {
+      return false;
+    }
+  };
+
 
   return (
     <>
@@ -65,19 +75,34 @@ function Signup() {
             <FormControl
               id="password"
               isRequired
-              isInvalid={error && error.field === "try another password"}
+              isInvalid={error && error.field === "password"}
               mb={4}
             >
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (!validatePassword(password)) {
+                    setErrorEmail('Password must be between 8 and 20 characters, contain letters and numbers');
+                    setIsEmailValid(false);
+                  } else {
+                    setErrorEmail('');
+                    setIsEmailValid(true);
+                  }
+                }}
                 placeholder="Enter your password"
               />
                 {error && error.field === "general" && (
                               <Text color="red.500">{error.message}</Text>
                             )}
+            {error && error.field === "password" && (
+              <Text color="red.500">{error.message}</Text>
+            )}
+            {!isEmailValid && (
+              <Text color="red.500">{errorEmail}</Text>
+            )}
             </FormControl>
             <Button
               type="submit"
@@ -85,6 +110,7 @@ function Signup() {
               mb={4}
               isLoading={isLoading}
               loadingText="Signing up..."
+              disabled={!validatePassword(password) || isLoading}
             >
               Sign up
             </Button>
@@ -97,10 +123,9 @@ function Signup() {
                 Log in
               </Link>
             </Text>
+
           </form>
-          {error && error.field === "general" && (
-            <Text color="red.500">{error.message}</Text>
-          )}
+
         </Box>
       </Flex>
     </>
