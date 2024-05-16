@@ -44,7 +44,8 @@ const sendEmail = async (req, res) => {
     };
 
     try {
-      await transporter.sendMail(messageEmail, messageEmail2);
+      await transporter.sendMail(messageEmail);
+      await transporter.sendMail(messageEmail2);
       console.log('Email sent successfully');
       res.sendStatus(200);
     } catch (error) {
