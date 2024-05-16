@@ -35,7 +35,7 @@ export const useLogin = () => {
       }
     } catch (error) {
       console.error('Error signing up:', error);
-      setError('An unexpected error occurred');
+      setError('email or password is incorrect');
       setIsLoading(false);
     }
   };
