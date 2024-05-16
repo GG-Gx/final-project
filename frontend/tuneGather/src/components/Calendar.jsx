@@ -12,7 +12,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { Link } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { AuthContext } from '../context/AuthContext';
 import CopyLinkModal from './copyLinkModal';
@@ -27,7 +26,6 @@ function Calendar() {
   const [eventClickInfo, setEventClickInfo] = useState(null);
   const [userId, setUserId] = useState(null);
   const calendarRef = useRef(null);
-  const { logout } = useLogout();
   const authContext = React.useContext(AuthContext);
   const toast = useToast();
 
@@ -48,9 +46,7 @@ function Calendar() {
 
  
 
-  const handleClickLogout =  () => {
-    logout();
-  }
+
 
   const handleEventAdd = async (event) => {
 
@@ -259,20 +255,6 @@ function Calendar() {
         
         }}>
           <Icon as={LinkIcon} color='white' /></Button>
-          <Button
-           type='button'
-            onClick={() => {
-              handleClickLogout();
-            }} style={{
-              position: 'absolute',
-              left: '20px',
-              backgroundColor: '#3182CE',
-              color: 'white',
-              borderRadius: '23px',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-           >Log out</Button>
 
 <AddEventModal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} onEventadded={handleEventAdd} />
       <DeleteEventModal 
@@ -319,5 +301,8 @@ function renderEventContent(eventInfo) {
 }
 
 Modal.setAppElement('#root');
+
+
+
 
 export default  Calendar;

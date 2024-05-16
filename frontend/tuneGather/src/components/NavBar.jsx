@@ -21,11 +21,21 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { AuthContext } from "../context/AuthContext";
+import { useLogout } from '../hooks/useLogout';
+
 
 
 
 
 function NavBar() {
+
+  const userLogged = React.useContext(AuthContext);
+  const { logout } = useLogout();
+  const handleClickLogout =  () => {
+    logout();
+  }
+
 
 return (
   <>
@@ -45,8 +55,9 @@ return (
                   <MenuItem  as='a' href='/login'>Log in</MenuItem>
               
                   <MenuItem as='a' href='/signup'>Sign up</MenuItem>
+
+                  {userLogged.auth.user ? <MenuItem as='a' onClick={handleClickLogout}>Log out</MenuItem> : null}
                 
-                  <MenuItem as='a' >About</MenuItem>
                   
               </MenuList>
               

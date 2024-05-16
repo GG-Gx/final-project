@@ -60,7 +60,7 @@ function Landing() {
                 <Heading as="h2" size="lg"  padding='20px' style={{  fontFamily: 'Lato'  }} marginBottom='10px'>
                  <Link
                   to='/signup'
-                  style={{ color: '#fa0559',  fontWeight: 'bold'}}
+                  style={{ color: '#fa0559',  fontWeight: 'bold', textShadow: '2px 3px 0px rgba(150, 150, 150, 1)'}}
 
                  >sign up </Link>
                  now to get started
